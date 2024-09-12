@@ -1,5 +1,6 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
+  Image,
   ScrollView,
   StyleSheet,
   Text,
@@ -106,15 +107,18 @@ const IndividualChat = (props: any) => {
         />
         <TouchableOpacity
           style={{
-            backgroundColor: 'blue',
             margin: 10,
             borderRadius: 10,
             right: 0,
             position: 'absolute',
             height: 40,
             width: 40,
+            justifyContent:'center',
+            alignItems:'center'
           }}
-          onPress={onSendMessage}></TouchableOpacity>
+          onPress={onSendMessage}>
+            <Image source={require('../Images/send-message.png')} style={{height: 30, width: 30}} />
+          </TouchableOpacity>
       </View>
     </View>
   );

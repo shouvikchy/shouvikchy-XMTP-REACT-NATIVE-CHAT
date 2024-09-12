@@ -75,26 +75,7 @@ const postData = async () => {
     console.error('Error posting data:', error.response ? error.response.data : error.message);
   }
 };
-const postImage = async () => {
-  const formData = new FormData();
-  formData.append('image', {
-    uri: fullimage.uri, // Local file URI or image file path
-    type: fullimage.type, // MIME type, adjust based on the file
-    name: fullimage.fileName,  // File name with extension
-  });
-  console.log('formData',formData)
 
-  try {
-    const response = await axios.post('http://127.0.0.1:8000/api/upload', formData, {
-      headers: {
-        'Content-Type': 'multipart/form-data', // Required for file uploads
-      },
-    });
-    console.log('Image uploaded successfully:', response.data);
-  } catch (error:any) {
-    console.error('Error uploading image:', error.response ? error.response.data : error.message);
-  }
-};
   return (
    <Routes/>
   );

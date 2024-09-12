@@ -9,23 +9,16 @@ import {
   StyleSheet,
   TouchableOpacity,
   ActivityIndicator,
+  Alert,
 } from 'react-native';
 import {Client, sign} from '@xmtp/react-native-sdk';
+import {ALCHEMY_PROVIDER_URL} from '@env';
 function ChatScreen(props: any): React.JSX.Element {
   const [isLoading, setIsLoading] = useState(false);
-
   const [xmtpClient, setXmtpClient] = useState<Client | null>(null);
   const [wallet, setWallet] = useState<ethers.Wallet | null>(null);
-
-  const [conversation, setConversation] = useState<any>(null);
-  const [peerData, setPeerData] = useState<any[]>([]);
-  const [messageHistory, setMessageHistory] = useState<any[]>([]);
   const [peerAddressList, setPeerAddressList] = useState<string[]>([]);
-  const [peerAddress, setPeerAddress] = useState(null);
-  const [messageType, setMessageType] = useState('allInbox');
-  const [changeConversationLoading, setChangeConversationLoading] =
-    useState(false);
-  const [isConnected, setIsConnected] = useState(false);
+  const [privateKey, setPrivateKey] = useState<string>('');
 
   const initXmtp = useCallback(async () => {
     if (wallet) {
@@ -56,19 +49,20 @@ function ChatScreen(props: any): React.JSX.Element {
     }
   }, [xmtpClient]);
   const initWallet = async () => {
-    try {
+    if(privateKey){try {
       setIsLoading(true);
       const ethProvider = await new ethers.providers.JsonRpcProvider(
-        '',
+        ALCHEMY_PROVIDER_URL,
       );
-      const wallet = await new Wallet(
-        '',
-        ethProvider,
-      );
+      const wallet = await new Wallet(privateKey, ethProvider);
       setWallet(wallet);
     } catch (e) {
+      Alert.alert('Invalid Private Key');
       setIsLoading(false);
       console.log(e);
+    }}
+    else{
+      Alert.alert('Please enter your private key to access the chat');
     }
   };
   const handleWalletClick = async (chat: any) => {
@@ -78,9 +72,9 @@ function ChatScreen(props: any): React.JSX.Element {
     });
   };
 
-  useEffect(() => {
-    initWallet();
-  }, []);
+  // useEffect(() => {
+  //   initWallet();
+  // }, []);
   useEffect(() => {
     if (wallet && !xmtpClient) {
       initXmtp();
@@ -93,11 +87,42 @@ function ChatScreen(props: any): React.JSX.Element {
   }, [fetchConversations, wallet, xmtpClient]);
 
   return (
-    <View style={{height: '100%', width: '100%', backgroundColor: 'tomato'}}>
-      {isLoading ? (
+    <View style={{height: '100%', width: '100%', backgroundColor: '#FFF'}}>
+      {!privateKey || !wallet ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontSize: 15, fontWeight: 'bold', color: 'tomato'}}>
+            Please enter your private key to access the chat
+          </Text>
+          {/* <View style={{width: '100%', alignItems: 'center'}}> */}
+            <TextInput
+              style={{
+                marginTop: 10,
+                padding: 10,
+                borderRadius: 5,
+                width: '80%',
+                backgroundColor: '#fff',
+                shadowColor: '#000',
+                shadowOffset: {
+                  width: 0,
+                  height: 3,
+                },
+                shadowOpacity: 0.27,
+                shadowRadius: 4.65,
+
+                elevation: 6,
+              }}
+              onChangeText={text => setPrivateKey(text)}
+              placeholder="Paste Your Private Key"
+            />
+          {/* </View> */}
+          <TouchableOpacity style={{marginTop: 20,width:120,height:35,borderRadius:5,justifyContent:'center',alignItems:'center',backgroundColor:'tomato'}} onPress={initWallet} >
+            <Text>Submit</Text>
+          </TouchableOpacity>
+        </View>
+      ) : isLoading ? (
         <ActivityIndicator size="large" color={'blue'} />
       ) : (
-        <ScrollView style={{flex: 1, backgroundColor: 'white', padding: 10}}>
+        <ScrollView style={{flex: 1, backgroundColor: '#FFF', padding: 10}}>
           {peerAddressList.length > 0 &&
             peerAddressList.map((peer, index) => {
               return (
@@ -107,8 +132,8 @@ function ChatScreen(props: any): React.JSX.Element {
                   style={[
                     {
                       flexDirection: 'row',
-                      padding: 10,
-                      backgroundColor: 'white',
+                       padding: 10,
+                      backgroundColor: '#FFF',
                       margin: 5,
                       borderRadius: 10,
                     },
@@ -119,7 +144,7 @@ function ChatScreen(props: any): React.JSX.Element {
                       {
                         height: 30,
                         width: 30,
-                        backgroundColor: 'white',
+                        backgroundColor: '#FFF',
                         borderRadius: 15,
                         justifyContent: 'center',
                         alignItems: 'center',
@@ -128,9 +153,7 @@ function ChatScreen(props: any): React.JSX.Element {
                       styles.shawow,
                     ]}>
                     <Image
-                      source={{
-                        uri: 'https://upload.wikimedia.org/wikipedia/commons/a/a2/Person_Image_Placeholder.png?20230410144854',
-                      }}
+                      source={require('../Images/owner.png')}
                       style={{
                         width: 20,
                         height: 20,
