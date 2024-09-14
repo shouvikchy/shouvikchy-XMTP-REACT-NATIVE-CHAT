@@ -6,7 +6,7 @@ require Pod::Executable.execute_command('node', ['-p',
     {paths: [process.argv[1]]},
   )', __dir__]).strip
 
-platform :ios, min_ios_version_supported
+platform :ios, 13.4
 prepare_react_native_project!
 
 linkage = ENV['USE_FRAMEWORKS']
@@ -16,6 +16,9 @@ if linkage != nil
 end
 
 target 'upload' do
+  pod 'XMTPReactNative', :path => '../node_modules/@xmtp/react-native-sdk/ios'
+  pod 'secp256k1.swift', :modular_headers => true
+  pod 'web3.swift', :modular_headers => true
   use_expo_modules!
   post_integrate do |installer|
     begin

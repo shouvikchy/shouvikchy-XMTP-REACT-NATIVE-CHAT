@@ -1,5 +1,8 @@
 PODS:
+  - BigInt (5.0.0)
   - boost (1.84.0)
+  - Connect-Swift (0.12.0):
+    - SwiftProtobuf (~> 1.25.2)
   - DoubleConversion (1.1.6)
   - EXConstants (16.0.2):
     - ExpoModulesCore
@@ -38,10 +41,15 @@ PODS:
     - Yoga
   - FBLazyVector (0.75.2)
   - fmt (9.1.0)
+  - GenericJSON (2.0.2)
   - glog (0.3.5)
+  - GzipSwift (5.1.1)
   - hermes-engine (0.75.2):
     - hermes-engine/Pre-built (= 0.75.2)
   - hermes-engine/Pre-built (0.75.2)
+  - LibXMTP (0.5.8-beta4)
+  - Logging (1.0.0)
+  - MessagePacker (0.4.7)
   - RCT-Folly (2024.01.01.00):
     - boost
     - DoubleConversion
@@ -1295,6 +1303,8 @@ PODS:
     - ReactCommon/turbomodule/bridging
     - ReactCommon/turbomodule/core
     - Yoga
+  - react-native-safe-area-context (4.11.0):
+    - React-Core
   - React-nativeconfig (0.75.2)
   - React-NativeModulesApple (0.75.2):
     - glog
@@ -1555,7 +1565,67 @@ PODS:
     - React-logger (= 0.75.2)
     - React-perflogger (= 0.75.2)
     - React-utils (= 0.75.2)
+  - RNGestureHandler (2.19.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - RNScreens (3.34.0):
+    - DoubleConversion
+    - glog
+    - hermes-engine
+    - RCT-Folly (= 2024.01.01.00)
+    - RCTRequired
+    - RCTTypeSafety
+    - React-Core
+    - React-debug
+    - React-Fabric
+    - React-featureflags
+    - React-graphics
+    - React-ImageManager
+    - React-NativeModulesApple
+    - React-RCTFabric
+    - React-RCTImage
+    - React-rendererdebug
+    - React-utils
+    - ReactCodegen
+    - ReactCommon/turbomodule/bridging
+    - ReactCommon/turbomodule/core
+    - Yoga
+  - secp256k1.swift (0.1.4)
   - SocketRocket (0.7.0)
+  - SwiftProtobuf (1.25.2)
+  - web3.swift (1.6.0):
+    - BigInt (~> 5.0.0)
+    - GenericJSON (~> 2.0)
+    - Logging (~> 1.0.0)
+    - secp256k1.swift (~> 0.1)
+  - XMTP (0.14.12):
+    - Connect-Swift (= 0.12.0)
+    - GzipSwift
+    - LibXMTP (= 0.5.8-beta4)
+    - web3.swift
+  - XMTPReactNative (2.5.3):
+    - ExpoModulesCore
+    - MessagePacker
+    - secp256k1.swift
+    - XMTP (= 0.14.12)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -1605,6 +1675,7 @@ DEPENDENCIES:
   - React-microtasksnativemodule (from `../node_modules/react-native/ReactCommon/react/nativemodule/microtasks`)
   - react-native-get-random-values (from `../node_modules/react-native-get-random-values`)
   - react-native-image-picker (from `../node_modules/react-native-image-picker`)
+  - react-native-safe-area-context (from `../node_modules/react-native-safe-area-context`)
   - React-nativeconfig (from `../node_modules/react-native/ReactCommon`)
   - React-NativeModulesApple (from `../node_modules/react-native/ReactCommon/react/nativemodule/core/platform/ios`)
   - React-perflogger (from `../node_modules/react-native/ReactCommon/reactperflogger`)
@@ -1631,11 +1702,27 @@ DEPENDENCIES:
   - React-utils (from `../node_modules/react-native/ReactCommon/react/utils`)
   - ReactCodegen (from `build/generated/ios`)
   - ReactCommon/turbomodule/core (from `../node_modules/react-native/ReactCommon`)
+  - RNGestureHandler (from `../node_modules/react-native-gesture-handler`)
+  - RNScreens (from `../node_modules/react-native-screens`)
+  - secp256k1.swift
+  - web3.swift
+  - "XMTPReactNative (from `../node_modules/@xmtp/react-native-sdk/ios`)"
   - Yoga (from `../node_modules/react-native/ReactCommon/yoga`)
 
 SPEC REPOS:
   trunk:
+    - BigInt
+    - Connect-Swift
+    - GenericJSON
+    - GzipSwift
+    - LibXMTP
+    - Logging
+    - MessagePacker
+    - secp256k1.swift
     - SocketRocket
+    - SwiftProtobuf
+    - web3.swift
+    - XMTP
 
 EXTERNAL SOURCES:
   boost:
@@ -1727,6 +1814,8 @@ EXTERNAL SOURCES:
     :path: "../node_modules/react-native-get-random-values"
   react-native-image-picker:
     :path: "../node_modules/react-native-image-picker"
+  react-native-safe-area-context:
+    :path: "../node_modules/react-native-safe-area-context"
   React-nativeconfig:
     :path: "../node_modules/react-native/ReactCommon"
   React-NativeModulesApple:
@@ -1779,11 +1868,19 @@ EXTERNAL SOURCES:
     :path: build/generated/ios
   ReactCommon:
     :path: "../node_modules/react-native/ReactCommon"
+  RNGestureHandler:
+    :path: "../node_modules/react-native-gesture-handler"
+  RNScreens:
+    :path: "../node_modules/react-native-screens"
+  XMTPReactNative:
+    :path: "../node_modules/@xmtp/react-native-sdk/ios"
   Yoga:
     :path: "../node_modules/react-native/ReactCommon/yoga"
 
 SPEC CHECKSUMS:
+  BigInt: 74b4d88367b0e819d9f77393549226d36faeb0d8
   boost: 4cb898d0bf20404aab1850c656dcea009429d6c1
+  Connect-Swift: 1de2ef4a548c59ecaeb9120812dfe0d6e07a0d47
   DoubleConversion: 76ab83afb40bddeeee456813d9c04f67f78771b5
   EXConstants: 409690fbfd5afea964e5e9d6c4eb2c2b59222c59
   Expo: 33132a667698a3259a4e6c0af1b4936388e5fa33
@@ -1794,8 +1891,13 @@ SPEC CHECKSUMS:
   ExpoModulesCore: 0f12e4d48d4484886e2940ece708f4dc73d6319c
   FBLazyVector: 38bb611218305c3bc61803e287b8a81c6f63b619
   fmt: 4c2741a687cc09f0634a2e2c72a838b99f1ff120
+  GenericJSON: 79a840eeb77030962e8cf02a62d36bd413b67626
   glog: 69ef571f3de08433d766d614c73a9838a06bf7eb
+  GzipSwift: 893f3e48e597a1a4f62fafcb6514220fcf8287fa
   hermes-engine: 3b6e0717ca847e2fc90a201e59db36caf04dee88
+  LibXMTP: 81b4f2952a2dccc0392773f9c7d43d478a6117e3
+  Logging: 9ef4ecb546ad3169398d5a723bc9bea1c46bef26
+  MessagePacker: ab2fe250e86ea7aedd1a9ee47a37083edd41fd02
   RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
   RCTDeprecation: 34cbf122b623037ea9facad2e92e53434c5c7422
   RCTRequired: 24c446d7bcd0f517d516b6265d8df04dc3eb1219
@@ -1827,6 +1929,7 @@ SPEC CHECKSUMS:
   React-microtasksnativemodule: 87b8de96f937faefece8afd2cb3a518321b2ef99
   react-native-get-random-values: 21325b2244dfa6b58878f51f9aa42821e7ba3d06
   react-native-image-picker: 2fbbafdae7a7c6db9d25df2f2b1db4442d2ca2ad
+  react-native-safe-area-context: 851c62c48dce80ccaa5637b6aa5991a1bc36eca9
   React-nativeconfig: 57781b79e11d5af7573e6f77cbf1143b71802a6d
   React-NativeModulesApple: 7ff2e2cfb2e5fa5bdedcecf28ce37e696c6ef1e1
   React-perflogger: 8a360ccf603de6ddbe9ff8f54383146d26e6c936
@@ -1853,9 +1956,16 @@ SPEC CHECKSUMS:
   React-utils: 81a715d9c0a2a49047e77a86f3a2247408540deb
   ReactCodegen: 60973d382704c793c605b9be0fc7f31cb279442f
   ReactCommon: 6ef348087d250257c44c0204461c03f036650e9b
+  RNGestureHandler: 3b6fa2bfa341c413d3d08444b838515b58e48ee7
+  RNScreens: 19719a9c326e925498ac3b2d35c4e50fe87afc06
+  secp256k1.swift: a7e7a214f6db6ce5db32cc6b2b45e5c4dd633634
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
+  SwiftProtobuf: 407a385e97fd206c4fbe880cc84123989167e0d1
+  web3.swift: 2263d1e12e121b2c42ffb63a5a7beb1acaf33959
+  XMTP: 9346396763b21176eae6a02692536b06922589b3
+  XMTPReactNative: 3f1b362ca29149ebb02d353b703c56c7f170f753
   Yoga: 2a45d7e59592db061217551fd3bbe2dd993817ae
 
-PODFILE CHECKSUM: 0a9688fd01e9fe9eb8986d1dced00e935dfccdac
+PODFILE CHECKSUM: 57c2c09b5bc2ff43b3cc8993eb7e4936eda912f3
 
 COCOAPODS: 1.15.2
