@@ -11,6 +11,10 @@ import {
   ActivityIndicator,
   Alert,
   Modal,
+  StatusBar,
+  SafeAreaView,
+  TouchableWithoutFeedback,
+  Settings,
 } from 'react-native';
 import {Client, sign} from '@xmtp/react-native-sdk';
 import {ALCHEMY_PROVIDER_URL} from '@env';
@@ -92,13 +96,14 @@ function ChatScreen(props: any): React.JSX.Element {
   const addressModal = () => {
     return (
       <Modal
-        animationType="slide"
+        animationType='fade'
         transparent={true}
         visible={modalVisible}
         onRequestClose={() => {
           Alert.alert('Modal has been closed.');
         }}>
-        <View
+          <TouchableWithoutFeedback style={{flex:1}} onPress={()=>{setModalVisible(false)}}>
+          <View
           style={{
             flex: 1,
             backgroundColor: 'rgba(0,0,0,0.5)',
@@ -113,7 +118,7 @@ function ChatScreen(props: any): React.JSX.Element {
               elevation: 5,
               height: 200,
             }}>
-            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+            <Text style={{fontSize: 20, fontWeight: 'bold',color:'#000'}}>
               Enter recipient's Address
             </Text>
             <TextInput
@@ -159,12 +164,16 @@ function ChatScreen(props: any): React.JSX.Element {
             </TouchableOpacity>
           </View>
         </View>
+          </TouchableWithoutFeedback>
+      
       </Modal>
     );
   };
 
   return (
+    <SafeAreaView style={{flex: 1, backgroundColor: '#FFF'}}>
     <View style={{height: '100%', width: '100%', backgroundColor: '#FFF'}}>
+      <StatusBar   backgroundColor="#FFF" barStyle="dark-content" />
       {addressModal()}
       {!privateKey || !wallet ? (
         <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
@@ -174,6 +183,7 @@ function ChatScreen(props: any): React.JSX.Element {
           {/* <View style={{width: '100%', alignItems: 'center'}}> */}
           <TextInput
             style={{
+              color:'#000',
               marginTop: 10,
               padding: 10,
               borderRadius: 5,
@@ -204,7 +214,7 @@ function ChatScreen(props: any): React.JSX.Element {
               backgroundColor: 'tomato',
             }}
             onPress={initWallet}>
-            <Text>Submit</Text>
+            <Text style={{color: '#fff', fontSize: 15, fontWeight: 'bold'}}>Submit</Text>
           </TouchableOpacity>
         </View>
       ) : isLoading ? (
@@ -251,7 +261,7 @@ function ChatScreen(props: any): React.JSX.Element {
                     />
                   </View>
 
-                  <Text style={{fontSize: 18, fontWeight: 'bold'}}>
+                  <Text style={{fontSize: 18, fontWeight: 'bold',color:'#000'}}>
                     {peer.length > 8
                       ? peer.substring(0, 4) + '...' + peer.slice(-4)
                       : peer}
@@ -288,6 +298,7 @@ function ChatScreen(props: any): React.JSX.Element {
         </Text>
       </TouchableOpacity>
     </View>
+    </SafeAreaView>
   );
 }
 const styles = StyleSheet.create({

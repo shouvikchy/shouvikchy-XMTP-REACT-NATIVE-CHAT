@@ -1,7 +1,9 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {
   Image,
+  SafeAreaView,
   ScrollView,
+  StatusBar,
   StyleSheet,
   Text,
   TextInput,
@@ -52,11 +54,9 @@ const IndividualChat = (props: any) => {
         // unsubscribe();
       };
     };
-    if(conversation)
-    {
+    if (conversation) {
       streamConversations();
     }
-    
   }, [conversation]);
   const onSendMessage = async () => {
     try {
@@ -69,7 +69,12 @@ const IndividualChat = (props: any) => {
     }
   };
   return (
-    <View style={{flex: 1, backgroundColor: 'tomato'}}>
+    <SafeAreaView style={{flex: 1, backgroundColor: 'white'}}>
+      <StatusBar        
+        backgroundColor="white"
+        barStyle="dark-content"
+      />
+    <View style={{flex: 1, backgroundColor: '#FFF'}}>
       <ScrollView ref={scrollViewRef}>
         {messageHistory.length > 0 &&
           messageHistory.map((message, index) => {
@@ -95,6 +100,14 @@ const IndividualChat = (props: any) => {
           margin: 10,
           borderRadius: 10,
           alignItems: 'center',
+          shadowColor: '#000',
+          shadowOffset: {
+            width: 0,
+            height: 3,
+          },
+          shadowOpacity: 0.27,
+          shadowRadius: 4.65,
+          elevation: 6,
         }}>
         <TextInput
           value={newMessage}
@@ -105,6 +118,7 @@ const IndividualChat = (props: any) => {
             backgroundColor: 'white',
             margin: 10,
             borderRadius: 10,
+            color:'#000'
           }}
           placeholder="Type a message"
         />
@@ -116,14 +130,18 @@ const IndividualChat = (props: any) => {
             position: 'absolute',
             height: 40,
             width: 40,
-            justifyContent:'center',
-            alignItems:'center'
+            justifyContent: 'center',
+            alignItems: 'center',
           }}
           onPress={onSendMessage}>
-            <Image source={require('../Images/send-message.png')} style={{height: 30, width: 30}} />
-          </TouchableOpacity>
+          <Image
+            source={require('../Images/send-message.png')}
+            style={{height: 30, width: 30}}
+          />
+        </TouchableOpacity>
       </View>
     </View>
+    </SafeAreaView>
   );
 };
 const styles = StyleSheet.create({

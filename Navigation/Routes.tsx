@@ -9,7 +9,7 @@ const Stack = createStackNavigator();
 export default function Routes() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName='ChatScreen'>
+      <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName='ChatScreen'>
         <Stack.Screen name="ChatScreen" component={ChatScreen} />
         <Stack.Screen name="IndividualChat" component={IndividualChat} />
       </Stack.Navigator>
