@@ -10,6 +10,7 @@ import {
   TouchableOpacity,
   ActivityIndicator,
   Alert,
+  Modal,
 } from 'react-native';
 import {Client, sign} from '@xmtp/react-native-sdk';
 import {ALCHEMY_PROVIDER_URL} from '@env';
@@ -19,6 +20,8 @@ function ChatScreen(props: any): React.JSX.Element {
   const [wallet, setWallet] = useState<ethers.Wallet | null>(null);
   const [peerAddressList, setPeerAddressList] = useState<string[]>([]);
   const [privateKey, setPrivateKey] = useState<string>('');
+  const [modalVisible, setModalVisible] = useState(false);
+  const [customAddress, setCustomAddress] = useState<string>('');
 
   const initXmtp = useCallback(async () => {
     if (wallet) {
@@ -49,19 +52,20 @@ function ChatScreen(props: any): React.JSX.Element {
     }
   }, [xmtpClient]);
   const initWallet = async () => {
-    if(privateKey){try {
-      setIsLoading(true);
-      const ethProvider = await new ethers.providers.JsonRpcProvider(
-        ALCHEMY_PROVIDER_URL,
-      );
-      const wallet = await new Wallet(privateKey, ethProvider);
-      setWallet(wallet);
-    } catch (e) {
-      Alert.alert('Invalid Private Key');
-      setIsLoading(false);
-      console.log(e);
-    }}
-    else{
+    if (privateKey) {
+      try {
+        setIsLoading(true);
+        const ethProvider = await new ethers.providers.JsonRpcProvider(
+          ALCHEMY_PROVIDER_URL,
+        );
+        const wallet = await new Wallet(privateKey, ethProvider);
+        setWallet(wallet);
+      } catch (e) {
+        Alert.alert('Invalid Private Key');
+        setIsLoading(false);
+        console.log(e);
+      }
+    } else {
       Alert.alert('Please enter your private key to access the chat');
     }
   };
@@ -85,21 +89,39 @@ function ChatScreen(props: any): React.JSX.Element {
       fetchConversations();
     }
   }, [fetchConversations, wallet, xmtpClient]);
-
-  return (
-    <View style={{height: '100%', width: '100%', backgroundColor: '#FFF'}}>
-      {!privateKey || !wallet ? (
-        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
-          <Text style={{fontSize: 15, fontWeight: 'bold', color: 'tomato'}}>
-            Please enter your private key to access the chat
-          </Text>
-          {/* <View style={{width: '100%', alignItems: 'center'}}> */}
+  const addressModal = () => {
+    return (
+      <Modal
+        animationType="slide"
+        transparent={true}
+        visible={modalVisible}
+        onRequestClose={() => {
+          Alert.alert('Modal has been closed.');
+        }}>
+        <View
+          style={{
+            flex: 1,
+            backgroundColor: 'rgba(0,0,0,0.5)',
+            justifyContent: 'center',
+          }}>
+          <View
+            style={{
+              backgroundColor: '#FFF',
+              padding: 20,
+              borderRadius: 10,
+              margin: 20,
+              elevation: 5,
+              height: 200,
+            }}>
+            <Text style={{fontSize: 20, fontWeight: 'bold'}}>
+              Enter recipient's Address
+            </Text>
             <TextInput
               style={{
                 marginTop: 10,
                 padding: 10,
                 borderRadius: 5,
-                width: '80%',
+                // width: '80%',
                 backgroundColor: '#fff',
                 shadowColor: '#000',
                 shadowOffset: {
@@ -108,14 +130,80 @@ function ChatScreen(props: any): React.JSX.Element {
                 },
                 shadowOpacity: 0.27,
                 shadowRadius: 4.65,
-
                 elevation: 6,
               }}
-              onChangeText={text => setPrivateKey(text)}
-              placeholder="Paste Your Private Key"
+              onChangeText={text => {setCustomAddress(text)}}
+              placeholder="paste wallet address"
             />
+            <TouchableOpacity
+            onPressIn={()=>{
+              props.navigation.navigate('IndividualChat', {
+                clientAddress: customAddress,
+                xmtpClient: xmtpClient,
+              });
+            }}
+              style={{
+                marginTop: 20,
+                width: 120,
+                height: 35,
+                borderRadius: 5,
+                justifyContent: 'center',
+                alignItems: 'center',
+                backgroundColor: 'tomato',
+                alignSelf: 'center',
+              }}
+              onPress={() => {}}>
+              <Text style={{fontSize: 15, fontWeight: 'bold', color: '#fff'}}>
+                Submit
+              </Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </Modal>
+    );
+  };
+
+  return (
+    <View style={{height: '100%', width: '100%', backgroundColor: '#FFF'}}>
+      {addressModal()}
+      {!privateKey || !wallet ? (
+        <View style={{flex: 1, justifyContent: 'center', alignItems: 'center'}}>
+          <Text style={{fontSize: 15, fontWeight: 'bold', color: 'tomato'}}>
+            Please enter your private key to access the chat
+          </Text>
+          {/* <View style={{width: '100%', alignItems: 'center'}}> */}
+          <TextInput
+            style={{
+              marginTop: 10,
+              padding: 10,
+              borderRadius: 5,
+              width: '80%',
+              backgroundColor: '#fff',
+              shadowColor: '#000',
+              shadowOffset: {
+                width: 0,
+                height: 3,
+              },
+              shadowOpacity: 0.27,
+              shadowRadius: 4.65,
+
+              elevation: 6,
+            }}
+            onChangeText={text => setPrivateKey(text)}
+            placeholder="Paste Your Private Key"
+          />
           {/* </View> */}
-          <TouchableOpacity style={{marginTop: 20,width:120,height:35,borderRadius:5,justifyContent:'center',alignItems:'center',backgroundColor:'tomato'}} onPress={initWallet} >
+          <TouchableOpacity
+            style={{
+              marginTop: 20,
+              width: 120,
+              height: 35,
+              borderRadius: 5,
+              justifyContent: 'center',
+              alignItems: 'center',
+              backgroundColor: 'tomato',
+            }}
+            onPress={initWallet}>
             <Text>Submit</Text>
           </TouchableOpacity>
         </View>
@@ -132,7 +220,7 @@ function ChatScreen(props: any): React.JSX.Element {
                   style={[
                     {
                       flexDirection: 'row',
-                       padding: 10,
+                      padding: 10,
                       backgroundColor: '#FFF',
                       margin: 5,
                       borderRadius: 10,
@@ -173,6 +261,32 @@ function ChatScreen(props: any): React.JSX.Element {
             })}
         </ScrollView>
       )}
+      <TouchableOpacity
+        onPress={() => {
+          setModalVisible(true);
+        }}
+        style={{
+          height: 40,
+          width: 40,
+          borderRadius: 20,
+          justifyContent: 'center',
+          alignItems: 'center',
+          bottom: 20,
+          right: 10,
+          position: 'absolute',
+          backgroundColor: 'tomato',
+          display:xmtpClient !=null ? 'flex' : 'none',
+        }}>
+        <Text
+          style={{
+            fontSize: 29,
+            fontWeight: 'bold',
+            color: '#fff',
+            textAlign: 'center',
+          }}>
+          +
+        </Text>
+      </TouchableOpacity>
     </View>
   );
 }

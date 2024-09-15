@@ -52,8 +52,11 @@ const IndividualChat = (props: any) => {
         // unsubscribe();
       };
     };
-
-    streamConversations();
+    if(conversation)
+    {
+      streamConversations();
+    }
+    
   }, [conversation]);
   const onSendMessage = async () => {
     try {

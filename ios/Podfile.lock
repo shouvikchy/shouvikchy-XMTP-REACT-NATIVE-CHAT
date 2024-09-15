@@ -47,7 +47,7 @@ PODS:
   - hermes-engine (0.75.2):
     - hermes-engine/Pre-built (= 0.75.2)
   - hermes-engine/Pre-built (0.75.2)
-  - LibXMTP (0.5.8-beta4)
+  - LibXMTP (0.5.8-beta5)
   - Logging (1.0.0)
   - MessagePacker (0.4.7)
   - RCT-Folly (2024.01.01.00):
@@ -1616,16 +1616,16 @@ PODS:
     - GenericJSON (~> 2.0)
     - Logging (~> 1.0.0)
     - secp256k1.swift (~> 0.1)
-  - XMTP (0.14.12):
+  - XMTP (0.14.13):
     - Connect-Swift (= 0.12.0)
     - GzipSwift
-    - LibXMTP (= 0.5.8-beta4)
+    - LibXMTP (= 0.5.8-beta5)
     - web3.swift
-  - XMTPReactNative (2.5.3):
+  - XMTPReactNative (2.5.4):
     - ExpoModulesCore
     - MessagePacker
     - secp256k1.swift
-    - XMTP (= 0.14.12)
+    - XMTP (= 0.14.13)
   - Yoga (0.0.0)
 
 DEPENDENCIES:
@@ -1895,7 +1895,7 @@ SPEC CHECKSUMS:
   glog: 69ef571f3de08433d766d614c73a9838a06bf7eb
   GzipSwift: 893f3e48e597a1a4f62fafcb6514220fcf8287fa
   hermes-engine: 3b6e0717ca847e2fc90a201e59db36caf04dee88
-  LibXMTP: 81b4f2952a2dccc0392773f9c7d43d478a6117e3
+  LibXMTP: ee1591fdb51bc6cc690c1a9ba10792ccc2104328
   Logging: 9ef4ecb546ad3169398d5a723bc9bea1c46bef26
   MessagePacker: ab2fe250e86ea7aedd1a9ee47a37083edd41fd02
   RCT-Folly: 4464f4d875961fce86008d45f4ecf6cef6de0740
@@ -1962,10 +1962,10 @@ SPEC CHECKSUMS:
   SocketRocket: abac6f5de4d4d62d24e11868d7a2f427e0ef940d
   SwiftProtobuf: 407a385e97fd206c4fbe880cc84123989167e0d1
   web3.swift: 2263d1e12e121b2c42ffb63a5a7beb1acaf33959
-  XMTP: 9346396763b21176eae6a02692536b06922589b3
-  XMTPReactNative: 3f1b362ca29149ebb02d353b703c56c7f170f753
+  XMTP: a9e7382ec5b57eeda3df7b177f034d061e3c9b61
+  XMTPReactNative: 63c46d6ba9b8dc5831ea49e8716f4b60cc012651
   Yoga: 2a45d7e59592db061217551fd3bbe2dd993817ae
 
-PODFILE CHECKSUM: 57c2c09b5bc2ff43b3cc8993eb7e4936eda912f3
+PODFILE CHECKSUM: 710091abe0abe2339c3f156d58bb2e189e87c7a1
 
 COCOAPODS: 1.15.2
